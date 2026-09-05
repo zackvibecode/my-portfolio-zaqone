@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   Globe,
   Database,
@@ -48,6 +49,7 @@ const SERVICES = [
 
 export function Services() {
   const [activeService, setActiveService] = useState<number | null>(0);
+  const reducedMotion = useReducedMotion();
 
   return (
     <section id="services" className="service-section">
@@ -85,21 +87,45 @@ export function Services() {
                       )}
                     </button>
                   </h3>
-                  <div
-                    id={"service-detail-" + index}
-                    aria-labelledby={"service-toggle-" + index}
-                    role="region"
-                    hidden={!expanded}
-                    className="service-detail"
-                  >
-                    <p>{service.desc}</p>
-                    <span className="service-learn-more">
-                      Learn More <ArrowUpRight size={17} strokeWidth={1.5} aria-hidden="true" />
-                    </span>
-                    <div className="service-preview" aria-hidden="true">
-                      <Icon strokeWidth={1} />
-                    </div>
-                  </div>
+                  <AnimatePresence initial={false}>
+                    {expanded && (
+                      <motion.div
+                        className="service-detail-motion"
+                        initial={reducedMotion ? false : { height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={reducedMotion ? { opacity: 1 } : { height: 0, opacity: 0 }}
+                        transition={{
+                          duration: reducedMotion ? 0 : 0.34,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
+                      >
+                        <div
+                          id={"service-detail-" + index}
+                          aria-labelledby={"service-toggle-" + index}
+                          role="region"
+                          className="service-detail"
+                        >
+                          <p>{service.desc}</p>
+                          <span className="service-learn-more">
+                            Learn More <ArrowUpRight size={17} strokeWidth={1.5} aria-hidden="true" />
+                          </span>
+                          <motion.div
+                            className="service-preview"
+                            aria-hidden="true"
+                            initial={reducedMotion ? false : { opacity: 0, x: 18, rotate: 4 }}
+                            animate={{ opacity: 1, x: 0, rotate: 8 }}
+                            transition={{
+                              duration: reducedMotion ? 0 : 0.45,
+                              delay: reducedMotion ? 0 : 0.1,
+                              ease: [0.22, 1, 0.36, 1],
+                            }}
+                          >
+                            <Icon strokeWidth={1} />
+                          </motion.div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </article>
               </Reveal>
             );

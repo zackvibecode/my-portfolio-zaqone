@@ -83,6 +83,7 @@
   min-width: 0;
   padding: 35px 0;
   border-bottom: 1px solid var(--line, #d7d7d7);
+  transition: transform .24s ease, border-color .24s ease;
 }
 
 .system-step-number {
@@ -94,6 +95,7 @@
   border: 1px solid var(--line, #d7d7d7);
   border-radius: 50%;
   font-size: 12px;
+  transition: background-color .24s ease, color .24s ease, transform .24s ease;
 }
 
 .system-step-copy { min-width: 0; }
@@ -134,6 +136,7 @@
   min-width: 0;
   padding: 32px 24px 0;
   border-right: 1px solid var(--line, #d7d7d7);
+  transition: transform .24s ease, border-color .24s ease;
 }
 .chatbot-item:first-child { padding-left: 0; }
 .chatbot-item:last-child { border-right: 0; padding-right: 0; }
@@ -202,8 +205,9 @@
   font-size: 18px;
   line-height: 1.45;
   letter-spacing: -.025em;
+  transition: transform .22s ease, color .22s ease, border-color .22s ease;
 }
-.skill-item svg { flex-shrink: 0; }
+.skill-item svg { flex-shrink: 0; transition: transform .22s ease; }
 
 .about-section {
   --ink: #f6f6f6;
@@ -231,6 +235,32 @@
 .about-principles li > span { color: var(--muted); font-size: 15px; }
 .about-principles li > p { font-size: 27px; font-weight: 400; line-height: 1.45; letter-spacing: -.025em; }
 .about-code { margin-top: 35px; color: var(--muted); line-height: 1.7; }
+
+@media (hover: hover) and (pointer: fine) {
+  .system-step:hover {
+    transform: translateX(6px);
+    border-bottom-color: var(--ink, #202020);
+  }
+
+  .system-step:hover .system-step-number {
+    background: var(--ink, #202020);
+    color: var(--page-bg, #f6f6f6);
+    transform: scale(1.06);
+  }
+
+  .chatbot-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--ink, #202020);
+  }
+
+  .skill-item:hover {
+    transform: translateX(5px);
+    color: var(--ink, #202020);
+    border-bottom-color: var(--ink, #202020);
+  }
+
+  .skill-item:hover svg { transform: rotate(-8deg) scale(1.07); }
+}
 
 @media (min-width: 1600px) {
   .support-heading h2 { font-size: 60px; }
@@ -306,6 +336,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .support-outline-button { transition: none; }
+  .support-outline-button,
+  .system-step,
+  .system-step-number,
+  .chatbot-item,
+  .skill-item,
+  .skill-item svg { transition: none; }
   .support-outline-button:hover { transform: none; }
 }

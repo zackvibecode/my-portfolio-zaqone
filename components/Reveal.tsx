@@ -14,12 +14,12 @@ interface RevealProps {
 export function Reveal({
   children,
   delay = 0,
-  y = 12,
+  y = 18,
   className,
   once = true,
 }: RevealProps) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once, margin: "-24px" });
+  const inView = useInView(ref, { once, margin: "-48px" });
   const reducedMotion = useReducedMotion();
 
   return (
@@ -29,7 +29,7 @@ export function Reveal({
       initial={false}
       animate={inView || reducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y }}
       transition={{
-        duration: reducedMotion ? 0 : 0.5,
+        duration: reducedMotion ? 0 : 0.52,
         delay: reducedMotion ? 0 : delay,
         ease: [0.22, 1, 0.36, 1],
       }}

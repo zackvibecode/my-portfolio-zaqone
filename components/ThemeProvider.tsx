@@ -7,6 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { MotionConfig } from "framer-motion";
 
 type Theme = "dark" | "light";
 
@@ -58,9 +59,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [theme, setTheme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggle, setTheme }}>
-      {children}
-    </ThemeContext.Provider>
+    <MotionConfig reducedMotion="user">
+      <ThemeContext.Provider value={{ theme, toggle, setTheme }}>
+        {children}
+      </ThemeContext.Provider>
+    </MotionConfig>
   );
 }
 

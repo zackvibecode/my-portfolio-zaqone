@@ -56,13 +56,16 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px soli
 .pill-button-dark { background: var(--button-bg); color: var(--button-ink); border-color: #555; box-shadow: inset 0 2px 3px #ffffff21, 0 4px 8px #0003; }
 .pill-button:hover { transform: translateY(-2px); box-shadow: 0 5px 12px #0003; }
 .pill-button svg, .social-pill svg { flex: none; }
+.pill-button svg, .hero-secondary-link svg { transition: transform .2s ease; }
+.pill-button:hover svg, .hero-secondary-link:hover svg { transform: translate(2px, -2px); }
 .social-pill { background: var(--surface); min-height: 49px; padding: 11px 18px; font-size: 17px; transition: background .2s, border-color .2s; }
 .social-pill:hover { background: var(--surface-soft); border-color: var(--ink); }
 .availability-pill { background: var(--surface); padding: 8px 13px; font-size: 16px; line-height: 1.45; box-shadow: 0 12px 24px #0000000c; }
-.availability-pill > span { width: 12px; height: 12px; flex: none; background: #21c269; border-radius: 50%; }
+.availability-pill > span { width: 12px; height: 12px; flex: none; background: #21c269; border-radius: 50%; animation: availability-pulse 2.4s ease-in-out infinite; }
 .text-pill { padding: 9px 17px; font-size: 15px; }
 .icon-button { width: 38px; height: 42px; display: inline-flex; align-items: center; justify-content: center; color: var(--ink); border-radius: 50%; transition: background .2s; }
 .icon-button:hover { background: var(--surface-soft); }
+.theme-toggle-icon { display: inline-flex; align-items: center; justify-content: center; }
 
 .site-header { position: fixed; inset: 0 0 auto; z-index: 50; padding-block: 59px 24px; transition: padding .25s, background .25s, box-shadow .25s; }
 .site-header.is-scrolled { padding-block: 16px; background: var(--hero-bg); box-shadow: 0 1px 0 var(--line); }
@@ -85,9 +88,11 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px soli
 .hero-stage { position: relative; height: 922px; }
 .hero-wordmark { position: absolute; left: 0; right: 0; top: 220px; }
 .hero-wordmark h1 { display: flex; justify-content: space-between; align-items: baseline; font-size: clamp(140px, 18.1vw, 246px); font-weight: 750; line-height: .92; letter-spacing: .005em; }
+.hero-wordmark h1 > span { display: inline-block; }
 .hero-wordmark h1 > span:first-child { color: var(--hero-bg); -webkit-text-stroke: 5px var(--ink); paint-order: stroke fill; font-weight: 600; }
 .hero-portrait { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 36%; height: 565px; background: var(--surface-soft); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--muted); gap: 15px; }
-.hero-portrait > p { font-size: 15px; }
+.hero-portrait-content { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+.hero-portrait-content > p { font-size: 15px; }
 .portrait-note { font-size: 12px; color: var(--muted); }
 .hero-copy { position: absolute; left: 32px; top: 594px; width: 338px; z-index: 2; }
 .hero-copy h2 { max-width: 350px; font-size: 32px; line-height: 1.16; letter-spacing: -.035em; font-weight: 600; }
@@ -204,6 +209,12 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px soli
   .footer-socials { order: 3; }
   .footer-credits { flex-direction: column; font-size: 11px; gap: 10px; }
 }
+
+@keyframes availability-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(33 194 105 / 0%); }
+  45% { box-shadow: 0 0 0 7px rgb(33 194 105 / 18%); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
