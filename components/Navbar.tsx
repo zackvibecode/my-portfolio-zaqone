@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sparkles } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 
 const NAV_ITEMS = [
@@ -18,6 +18,8 @@ const NAV_ITEMS = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -27,118 +29,54 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+    const trigger = triggerRef.current;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    menuRef.current?.querySelector<HTMLButtonElement>("button")?.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Tab") {
+        const items = menuRef.current?.querySelectorAll<HTMLElement>("a[href],button");
+        if (!items?.length) return;
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKeyDown);
+      trigger?.focus();
     };
   }, [open]);
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? "glass py-3" : "py-5 bg-transparent"
-      }`}
-    >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-8">
-        <a href="#home" className="group flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-accent/40 bg-gradient-to-br from-accent/30 to-accent-bright/10">
-            <Sparkles size={16} className="text-lavender" />
-          </span>
-          <span className="text-lg font-bold tracking-tight theme-text">
-            ZAQ<span className="gradient-text">ONE</span>
-          </span>
-        </a>
-
-        <ul className="hidden items-center gap-1 lg:flex">
-          {NAV_ITEMS.map((item) => (
-            <li key={item.href}>
-              <a
-                href={item.href}
-                className="relative rounded-lg px-3.5 py-2 text-sm font-medium theme-muted transition-colors hover:theme-text"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
+    <header className={"site-header" + (scrolled ? " is-scrolled" : "")}>
+      <nav className="page-container navigation" aria-label="Main navigation">
+        <a href="#home" className="availability-pill" aria-label="ZAQONE — Home"><span />Available for projects</a>
+        <ul className="desktop-navigation">
+          <li><a href="#projects">Projects <span>[4]</span></a></li>
+          <li><a href="#services">Services <span>[6]</span></a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
-
-        <div className="flex items-center gap-2.5">
+        <div className="navigation-actions">
           <ThemeToggle />
-          <a
-            href="#contact"
-            className="hidden rounded-xl bg-gradient-to-r from-accent to-accent-bright px-4 py-2.5 text-sm font-semibold text-white btn-glow sm:inline-flex"
-          >
-            Let&apos;s Talk
-          </a>
-          <button
-            aria-label="Open menu"
-            onClick={() => setOpen(true)}
-            className="flex h-10 w-10 items-center justify-center rounded-xl theme-card-2 border theme-border lg:hidden"
-          >
-            <Menu size={20} className="theme-text" />
-          </button>
+          <button ref={triggerRef} className="icon-button menu-trigger" aria-label="Open menu" aria-expanded={open} aria-controls="navigation-menu" onClick={() => setOpen(true)}><Menu size={20} /></button>
+          <a href="#contact" className="pill-button pill-button-dark header-cta">Let&apos;s Talk <ArrowUpRight size={18} aria-hidden="true" /></a>
         </div>
       </nav>
-
       <AnimatePresence>
         {open && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-50 lg:hidden"
-          >
-            <div
-              className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-              onClick={() => setOpen(false)}
-            />
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 28, stiffness: 260 }}
-              className="absolute right-0 top-0 flex h-full w-[78%] max-w-xs flex-col theme-card border-l theme-border p-6"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-lg font-bold theme-text">
-                  ZAQ<span className="gradient-text">ONE</span>
-                </span>
-                <button
-                  aria-label="Close menu"
-                  onClick={() => setOpen(false)}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl theme-card-2 border theme-border"
-                >
-                  <X size={20} className="theme-text" />
-                </button>
-              </div>
-
-              <ul className="mt-8 flex flex-col gap-1">
-                {NAV_ITEMS.map((item, i) => (
-                  <motion.li
-                    key={item.href}
-                    initial={{ opacity: 0, x: 24 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.08 + i * 0.05 }}
-                  >
-                    <a
-                      href={item.href}
-                      onClick={() => setOpen(false)}
-                      className="block rounded-xl px-4 py-3 text-base font-medium theme-muted transition-colors hover:bg-accent/10 hover:theme-text"
-                    >
-                      {item.label}
-                    </a>
-                  </motion.li>
-                ))}
-              </ul>
-
-              <a
-                href="#contact"
-                onClick={() => setOpen(false)}
-                className="mt-auto rounded-xl bg-gradient-to-r from-accent to-accent-bright px-5 py-3.5 text-center text-base font-semibold text-white btn-glow"
-              >
-                Let&apos;s Talk
-              </a>
+          <motion.div className="menu-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.18 }}>
+            <div className="menu-backdrop" onClick={() => setOpen(false)} aria-hidden="true" />
+            <motion.div ref={menuRef} id="navigation-menu" className="menu-panel" role="dialog" aria-modal="true" aria-label="Navigation menu" initial={{ x: 24 }} animate={{ x: 0 }} exit={{ x: 24 }} transition={{ duration: 0.2 }}>
+              <div className="menu-heading"><span>ZAQONE</span><button className="icon-button" aria-label="Close menu" onClick={() => setOpen(false)}><X size={22} /></button></div>
+              <ul>{NAV_ITEMS.map((item) => <li key={item.href}><a href={item.href} onClick={() => setOpen(false)}>{item.label}<ArrowUpRight size={22} aria-hidden="true" /></a></li>)}</ul>
+              <a href="#contact" className="pill-button pill-button-dark" onClick={() => setOpen(false)}>Let&apos;s Talk <ArrowUpRight size={18} aria-hidden="true" /></a>
             </motion.div>
           </motion.div>
         )}

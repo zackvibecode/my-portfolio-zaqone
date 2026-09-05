@@ -33,18 +33,16 @@ function applyTheme(theme: Theme) {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("dark");
-  const [mounted, setMounted] = useState(false);
+  const [theme, setThemeState] = useState<Theme>("light");
 
   useEffect(() => {
-    let initial: Theme = "dark";
+    let initial: Theme = "light";
     try {
       const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;
       if (stored === "light" || stored === "dark") initial = stored;
     } catch {}
     setThemeState(initial);
     applyTheme(initial);
-    setMounted(true);
   }, []);
 
   const setTheme = useCallback((t: Theme) => {
@@ -70,7 +68,7 @@ export function useTheme() {
   const ctx = useContext(ThemeContext);
   if (!ctx) {
     return {
-      theme: "dark" as Theme,
+      theme: "light" as Theme,
       toggle: () => {},
       setTheme: () => {},
     };

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Globe,
   Database,
@@ -8,6 +9,7 @@ import {
   MessageSquare,
   Target,
   ArrowUpRight,
+  X,
 } from "lucide-react";
 import { Reveal } from "./Reveal";
 
@@ -45,59 +47,65 @@ const SERVICES = [
 ];
 
 export function Services() {
+  const [activeService, setActiveService] = useState<number | null>(0);
+
   return (
-    <section id="services" className="relative py-24 sm:py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <Reveal className="max-w-2xl">
-          <span className="inline-flex items-center gap-2 rounded-full theme-card border theme-border px-3.5 py-1.5 text-xs font-medium theme-muted">
-            <span className="flex h-1.5 w-1.5 rounded-full bg-accent-bright" />
-            Services
-          </span>
-          <h2 className="mt-5 text-3xl font-bold tracking-tight theme-text sm:text-4xl lg:text-5xl">
-            Services That Build Growth
-          </h2>
-          <p className="mt-4 text-base theme-muted sm:text-lg">
+    <section id="services" className="service-section">
+      <div className="service-container">
+        <Reveal className="service-heading">
+          <span className="service-ghost">Services</span>
+          <h2>Services That Build Growth</h2>
+          <p>
             A blend of marketing strategy, websites, automation and AI systems
             to help businesses grow smarter.
           </p>
         </Reveal>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map((s, i) => (
-            <Reveal key={s.title} delay={i * 0.08}>
-              <ServiceCard {...s} />
-            </Reveal>
-          ))}
+        <div className="service-list">
+          {SERVICES.map((service, index) => {
+            const expanded = activeService === index;
+            const Icon = service.icon;
+            return (
+              <Reveal key={service.title} delay={0.04}>
+                <article className={"service-row" + (expanded ? " service-row-open" : "")}>
+                  <h3>
+                    <button
+                      type="button"
+                      className="service-toggle"
+                      id={"service-toggle-" + index}
+                      aria-expanded={expanded}
+                      aria-controls={"service-detail-" + index}
+                      onClick={() => setActiveService(expanded ? null : index)}
+                    >
+                      <span>{service.title}</span>
+                      {expanded ? (
+                        <X aria-hidden="true" strokeWidth={1.4} />
+                      ) : (
+                        <ArrowUpRight aria-hidden="true" strokeWidth={1.4} />
+                      )}
+                    </button>
+                  </h3>
+                  <div
+                    id={"service-detail-" + index}
+                    aria-labelledby={"service-toggle-" + index}
+                    role="region"
+                    hidden={!expanded}
+                    className="service-detail"
+                  >
+                    <p>{service.desc}</p>
+                    <span className="service-learn-more">
+                      Learn More <ArrowUpRight size={17} strokeWidth={1.5} aria-hidden="true" />
+                    </span>
+                    <div className="service-preview" aria-hidden="true">
+                      <Icon strokeWidth={1} />
+                    </div>
+                  </div>
+                </article>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>
-  );
-}
-
-function ServiceCard({
-  icon: Icon,
-  title,
-  desc,
-}: {
-  icon: typeof Globe;
-  title: string;
-  desc: string;
-}) {
-  return (
-    <div className="card-glow group relative h-full overflow-hidden rounded-2xl theme-card border theme-border p-6">
-      <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-accent/10 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-accent/25 to-accent-bright/10 ring-1 ring-accent/30">
-        <Icon size={22} className="text-lavender" />
-      </div>
-      <h3 className="mt-5 text-lg font-semibold theme-text">{title}</h3>
-      <p className="mt-2 text-sm leading-relaxed theme-muted">{desc}</p>
-      <div className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-lavender">
-        Learn More
-        <ArrowUpRight
-          size={14}
-          className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-        />
-      </div>
-    </div>
   );
 }

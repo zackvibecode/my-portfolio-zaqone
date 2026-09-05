@@ -1,16 +1,18 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 
-const inter = Inter({
-  subsets: ["latin"],
+const inter = localFont({
+  src: "./fonts/inter-latin.woff2",
+  weight: "100 900",
   variable: "--font-sans",
   display: "swap",
 });
 
-const jetbrains = JetBrains_Mono({
-  subsets: ["latin"],
+const jetbrains = localFont({
+  src: "./fonts/jetbrains-mono-latin.woff2",
+  weight: "100 800",
   variable: "--font-mono",
   display: "swap",
 });
@@ -40,7 +42,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#05050A",
+  themeColor: "#FFFFFF",
   width: "device-width",
   initialScale: 1,
 };
@@ -49,7 +51,7 @@ const themeScript = `
 (function() {
   try {
     var stored = localStorage.getItem('zaqone-theme');
-    var theme = stored || 'dark';
+    var theme = stored === 'dark' ? 'dark' : 'light';
     if (theme === 'light') {
       document.documentElement.classList.add('light');
       document.body && document.body.classList.add('light');

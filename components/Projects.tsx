@@ -36,26 +36,21 @@ const PROJECTS = [
 
 export function Projects() {
   return (
-    <section id="projects" className="relative py-24 sm:py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <Reveal className="max-w-2xl">
-          <span className="inline-flex items-center gap-2 rounded-full theme-card border theme-border px-3.5 py-1.5 text-xs font-medium theme-muted">
-            <span className="flex h-1.5 w-1.5 rounded-full bg-accent-bright" />
-            Featured Projects
-          </span>
-          <h2 className="mt-5 text-3xl font-bold tracking-tight theme-text sm:text-4xl lg:text-5xl">
-            Selected Work
-          </h2>
-          <p className="mt-4 text-base theme-muted sm:text-lg">
+    <section id="projects" className="project-section">
+      <div className="project-container">
+        <Reveal className="project-heading">
+          <span className="project-ghost">Featured Projects</span>
+          <h2>Selected Work</h2>
+          <p>
             A look at the systems, websites and automation flows I have been
             building.
           </p>
         </Reveal>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2">
-          {PROJECTS.map((p, i) => (
-            <Reveal key={p.title} delay={i * 0.08}>
-              <ProjectCard {...p} />
+        <div className="project-grid">
+          {PROJECTS.map((project, index) => (
+            <Reveal key={project.title} delay={(index % 2) * 0.08}>
+              <ProjectCard {...project} />
             </Reveal>
           ))}
         </div>
@@ -70,50 +65,27 @@ function ProjectCard({
   title,
   desc,
   tags,
-}: {
-  icon: typeof Bot;
-  type: string;
-  title: string;
-  desc: string;
-  tags: string[];
-}) {
+}: (typeof PROJECTS)[number]) {
   return (
-    <div className="card-glow group relative h-full overflow-hidden rounded-2xl theme-card border theme-border p-6 sm:p-7">
-      <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-accent/10 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-      <div className="flex items-start justify-between gap-4">
-        <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-accent/25 to-accent-bright/10 ring-1 ring-accent/30">
-          <Icon size={22} className="text-lavender" />
-        </span>
-        <span className="rounded-full theme-card-2 border theme-border px-3 py-1 text-[11px] font-medium theme-muted">
-          {type}
-        </span>
+    <article className="project-card">
+      <div className="project-preview" role="img" aria-label={title + " — " + type + ": project image placeholder"}>
+        <span className="project-type">{type}</span>
+        <Icon className="project-placeholder-icon" strokeWidth={1} aria-hidden="true" />
+        <ArrowUpRight className="project-preview-arrow" strokeWidth={1.5} aria-hidden="true" />
       </div>
 
-      <h3 className="mt-5 text-xl font-semibold theme-text">{title}</h3>
-      <p className="mt-2.5 text-sm leading-relaxed theme-muted">{desc}</p>
-
-      <div className="mt-5 flex flex-wrap gap-2">
-        {tags.map((t) => (
-          <span
-            key={t}
-            className="rounded-lg theme-card-2 border theme-border px-2.5 py-1 text-[11px] font-medium theme-text/85"
-          >
-            {t}
-          </span>
-        ))}
+      <div className="project-card-content">
+        <h3>{title}</h3>
+        <p className="project-description">{desc}</p>
+        <div className="project-tags">
+          {tags.map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
+        </div>
+        <a href="#contact" className="project-link">
+          View Details <ArrowUpRight size={19} strokeWidth={1.5} aria-hidden="true" />
+        </a>
       </div>
-
-      <a
-        href="#contact"
-        className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-lavender"
-      >
-        View Details
-        <ArrowUpRight
-          size={14}
-          className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-        />
-      </a>
-    </div>
+    </article>
   );
 }

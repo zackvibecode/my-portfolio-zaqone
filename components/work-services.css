@@ -1,0 +1,479 @@
+.project-section,
+.service-section {
+  background: var(--page-bg, #f6f6f6);
+  color: var(--ink, #202020);
+}
+
+.project-section {
+  padding: 112px 0 142px;
+}
+
+.project-container {
+  width: min(1040px, calc(100% - 128px));
+  margin-inline: auto;
+}
+
+.project-heading,
+.service-heading {
+  position: relative;
+  isolation: isolate;
+}
+
+.project-heading {
+  padding-top: 79px;
+  text-align: center;
+}
+
+.project-ghost,
+.service-ghost {
+  position: absolute;
+  z-index: -1;
+  top: -18px;
+  left: 0;
+  width: 100%;
+  color: var(--ghost, #eee);
+  font-size: clamp(52px, 6.8vw, 92px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.project-heading h2,
+.service-heading h2 {
+  font-size: clamp(32px, 4.25vw, 58px);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+.project-heading h2::before,
+.service-heading h2::before {
+  content: "/";
+  padding-right: 0.06em;
+}
+
+.project-heading > p {
+  max-width: 670px;
+  margin: 100px 0 0;
+  text-align: left;
+  color: var(--muted, #555);
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 64px 62px;
+  margin-top: 78px;
+}
+
+.project-card {
+  height: 100%;
+  padding: 6px;
+  background: var(--surface, #f8f8f8);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 3%);
+}
+
+.project-preview {
+  position: relative;
+  display: grid;
+  aspect-ratio: 1.4;
+  place-items: center;
+  overflow: hidden;
+  background: var(--placeholder, #e6e6e6);
+  border: 1px solid var(--line, #dedede);
+}
+
+.project-type {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  max-width: calc(100% - 24px);
+  padding: 7px 13px;
+  border-radius: 30px;
+  background: var(--surface, #fff);
+  color: var(--ink, #202020);
+  font-size: 10px;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.project-placeholder-icon {
+  width: 68px;
+  height: 68px;
+  color: var(--muted, #757575);
+  opacity: 0.5;
+}
+
+.project-preview-arrow {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  width: 54px;
+  height: 54px;
+  padding: 16px;
+  border-radius: 50%;
+  background: var(--surface, #fff);
+  color: var(--ink, #202020);
+  transition: transform 200ms ease;
+}
+
+.project-card:hover .project-preview-arrow,
+.project-card:focus-within .project-preview-arrow {
+  transform: rotate(45deg);
+}
+
+.project-card-content {
+  padding: 19px 12px 20px;
+}
+
+.project-card h3 {
+  font-size: clamp(23px, 2vw, 28px);
+  font-weight: 450;
+  line-height: 1.4;
+  letter-spacing: -0.04em;
+}
+
+.project-description {
+  margin-top: 14px;
+  color: var(--muted, #555);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.project-tags > span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 8px 16px;
+  border: 1px solid var(--line, #dedede);
+  border-radius: 30px;
+  color: var(--ink, #202020);
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  margin-top: 16px;
+  color: var(--ink, #202020);
+  font-size: 15px;
+}
+
+.project-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+.project-link:focus-visible,
+.service-toggle:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+}
+
+.service-section {
+  padding: 48px 0 146px;
+}
+
+.service-container {
+  width: min(1280px, calc(100% - 128px));
+  margin-inline: auto;
+}
+
+.service-heading {
+  padding-top: 71px;
+}
+
+.service-ghost {
+  top: -21px;
+  font-size: clamp(84px, 11.5vw, 156px);
+}
+
+.service-heading > p {
+  max-width: 730px;
+  margin-top: 16px;
+  color: var(--muted, #555);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.service-list {
+  margin-top: 40px;
+}
+
+.service-row {
+  position: relative;
+  border-bottom: 1px solid var(--line, #aaa);
+  transition: background-color 220ms ease, color 220ms ease;
+}
+
+.service-row h3 {
+  margin: 0;
+}
+
+.service-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  min-height: 178px;
+  padding: 44px 25px;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  font-size: clamp(28px, 3.6vw, 51px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.service-toggle > svg {
+  flex: 0 0 auto;
+  width: 43px;
+  height: 43px;
+}
+
+.service-row-open {
+  z-index: 1;
+  border-bottom-color: transparent;
+  border-radius: 8px;
+  background: #262626;
+  color: #f8f8f8;
+  box-shadow: 0 4px 9px rgb(0 0 0 / 24%), inset 0 1px 5px rgb(255 255 255 / 13%);
+}
+
+.service-row-open .service-toggle {
+  min-height: 147px;
+  padding-top: 58px;
+  padding-bottom: 24px;
+}
+
+.service-row-open .service-toggle > span {
+  position: relative;
+  z-index: 1;
+  max-width: 68%;
+}
+
+.service-row-open .service-toggle > svg {
+  position: absolute;
+  top: 50%;
+  right: 29px;
+  transform: translateY(-50%);
+}
+
+.service-detail {
+  padding: 0 25px 40px;
+}
+
+.service-detail > p {
+  position: relative;
+  z-index: 1;
+  max-width: 560px;
+  color: #d5d5d5;
+  font-size: 20px;
+  font-weight: 350;
+  line-height: 1.5;
+}
+
+.service-learn-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 20px;
+  color: #eee;
+  font-size: 14px;
+}
+
+.service-preview {
+  position: absolute;
+  top: -41px;
+  right: 15%;
+  display: grid;
+  width: 235px;
+  aspect-ratio: 1.34;
+  place-items: center;
+  background: #e9e9e9;
+  color: #999;
+  box-shadow: 0 1px 24px rgb(0 0 0 / 12%);
+  transform: rotate(8deg);
+}
+
+.service-preview > svg {
+  width: 68px;
+  height: 68px;
+}
+
+@media (max-width: 1100px) {
+  .project-container,
+  .service-container {
+    width: calc(100% - 80px);
+  }
+
+  .project-grid {
+    column-gap: 35px;
+  }
+
+  .service-preview {
+    top: -31px;
+    right: 14%;
+    width: 190px;
+  }
+
+  .service-row-open .service-toggle > span,
+  .service-detail > p {
+    max-width: 62%;
+  }
+}
+
+@media (max-width: 767px) {
+  .project-section,
+  .service-section {
+    padding: 76px 0 86px;
+  }
+
+  .project-container,
+  .service-container {
+    width: calc(100% - 40px);
+  }
+
+  .project-heading {
+    padding-top: 39px;
+  }
+
+  .project-ghost {
+    top: 0;
+    font-size: clamp(23px, 6.5vw, 49px);
+    letter-spacing: 0;
+  }
+
+  .project-heading h2,
+  .service-heading h2 {
+    font-size: clamp(29px, 5.1vw, 39px);
+  }
+
+  .project-heading > p,
+  .service-heading > p {
+    margin-top: 24px;
+    font-size: 15px;
+  }
+
+  .project-grid {
+    gap: 36px 24px;
+    margin-top: 36px;
+  }
+
+  .project-card-content {
+    padding: 16px 6px 12px;
+  }
+
+  .project-card h3 {
+    font-size: 23px;
+  }
+
+  .project-tags {
+    gap: 8px;
+  }
+
+  .project-tags > span {
+    min-height: 35px;
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+
+  .service-heading {
+    padding-top: 41px;
+  }
+
+  .service-ghost {
+    top: -4px;
+    font-size: 15vw;
+  }
+
+  .service-list {
+    margin-top: 56px;
+  }
+
+  .service-toggle {
+    gap: 18px;
+    min-height: 132px;
+    padding: 31px 12px;
+    font-size: clamp(25px, 4.3vw, 33px);
+  }
+
+  .service-toggle > svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .service-row-open .service-toggle {
+    min-height: 114px;
+    padding: 32px 20px 18px;
+  }
+
+  .service-row-open .service-toggle > span {
+    max-width: calc(100% - 44px);
+  }
+
+  .service-row-open .service-toggle > svg {
+    top: 42px;
+    right: 20px;
+    transform: none;
+  }
+
+  .service-detail {
+    padding: 0 20px 28px;
+  }
+
+  .service-detail > p {
+    max-width: none;
+    font-size: 17px;
+  }
+
+  .service-preview {
+    position: relative;
+    inset: auto;
+    width: 155px;
+    margin: 28px auto 5px;
+    transform: rotate(6deg);
+  }
+
+  .service-preview > svg {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+@media (max-width: 600px) {
+  .project-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .project-heading h2 {
+    font-size: 34px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-preview-arrow,
+  .service-row {
+    transition: none;
+  }
+}
