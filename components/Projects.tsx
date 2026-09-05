@@ -1,36 +1,65 @@
 "use client";
 
-import { ArrowUpRight, Map, LayoutDashboard, Workflow, Bot } from "lucide-react";
+import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "./Reveal";
 
 const PROJECTS = [
   {
-    icon: Map,
-    type: "Travel Website / Lead Funnel",
-    title: "Nusatravel Website System",
-    desc: "A travel website and inquiry flow designed to help customers explore packages and contact the sales team easily.",
-    tags: ["Next.js", "Tailwind", "Lead Funnel", "WhatsApp"],
+    image: "/projects/oneform.png",
+    type: "SaaS Product / Lead Capture",
+    title: "OneForm — WhatsApp Form Builder",
+    desc: "A no-code form builder that turns customer responses into ready-to-reply WhatsApp conversations.",
+    tags: ["SaaS", "AI Form Builder", "WhatsApp", "No-code", "Lead Capture"],
+    href: "https://form.zaqone.com/",
   },
   {
-    icon: LayoutDashboard,
-    type: "CRM / Internal Sales System",
-    title: "Travel CRM Dashboard",
-    desc: "A lead management dashboard concept for tracking inquiries, status, sales progress and follow-up actions.",
-    tags: ["Supabase", "CRM", "Dashboard", "Sales"],
+    image: "/projects/salescrm.png",
+    type: "SaaS Product / CRM",
+    title: "Zaqone CRM — Travel Sales CRM",
+    desc: "A sales workspace for travel teams to import leads, manage follow-ups and track WhatsApp performance.",
+    tags: ["CRM", "Travel Tech", "WhatsApp", "Analytics", "Supabase"],
+    href: "https://salescrm.zaqone.com/",
   },
   {
-    icon: Workflow,
-    type: "Marketing Automation",
-    title: "Meta Lead Ads Automation",
-    desc: "A workflow connecting Meta Lead Ads to Google Sheets or CRM, WhatsApp message flow and sales team assignment.",
-    tags: ["n8n", "Meta Ads", "Google Sheets", "WhatsApp"],
+    image: "/projects/trip-seat.png",
+    type: "Systems / SaaS",
+    title: "Nusa Travel Trip Seat",
+    desc: "A travel operations CRM for managing departures, live seat availability, payments and team updates from one dashboard.",
+    tags: ["Travel CRM", "SaaS", "Dashboard", "Real-time Operations"],
+    href: "https://nusatravel-seat.onrender.com/",
   },
   {
-    icon: Bot,
-    type: "AI Chatbot / WhatsApp Assistant",
-    title: "AI Travel Sales Chatbot",
-    desc: "An AI assistant concept that answers customer questions, recommends packages and captures lead details before human handover.",
-    tags: ["OpenAI", "WhatsApp", "AI", "Handover"],
+    image: "/projects/travel.png",
+    type: "Web App / Travel Platform",
+    title: "ZAQONE Travel",
+    desc: "A premium travel-package platform for searching departures, viewing live package details and converting enquiries through WhatsApp.",
+    tags: ["Travel Tech", "Booking Platform", "Lead Generation", "WhatsApp"],
+    href: "https://travel.zaqone.com/",
+  },
+  {
+    image: "/projects/makassar.png",
+    type: "Campaign / Landing Page",
+    title: "Nusatravel Makassar 2026",
+    desc: "A high-conversion travel campaign page that turns a detailed 5D4N group itinerary into clear pricing, availability and WhatsApp enquiries.",
+    tags: ["Travel", "Landing Page", "Conversion Design", "Booking Funnel"],
+    href: "https://makassar.nusatravel.zaqone.com/",
+  },
+  {
+    image: "/projects/matcha.png",
+    type: "Brand Website / F&B",
+    title: "MORI MATCHA — Café Brand Website",
+    desc: "A Japanese-inspired café experience with a browsable menu, brand story and mobile-first visit and WhatsApp conversion paths.",
+    tags: ["Web Design", "F&B", "Branding", "Menu UX", "Responsive"],
+    href: "https://matcha.zaqone.com/",
+  },
+  {
+    image: "/projects/automotive.png",
+    type: "Brand Website / Automotive",
+    title: "ZAQONE Automotive",
+    desc: "A premium vehicle-wrap studio website that showcases selected work, service options and a WhatsApp quote flow.",
+    tags: ["Automotive", "Branding", "Web Design", "Lead Generation"],
+    href: "https://zaqone-automotive.vercel.app/",
   },
 ];
 
@@ -60,19 +89,32 @@ export function Projects() {
 }
 
 function ProjectCard({
-  icon: Icon,
+  image,
   type,
   title,
   desc,
   tags,
+  href,
 }: (typeof PROJECTS)[number]) {
   return (
     <article className="project-card">
-      <div className="project-preview" role="img" aria-label={title + " — " + type + ": project image placeholder"}>
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        className="project-preview"
+        aria-label={"Visit " + title + " — " + type + " (opens in a new tab)"}
+      >
+        <Image
+          src={image}
+          alt=""
+          fill
+          sizes="(max-width: 600px) 100vw, 50vw"
+          className="project-preview-image"
+        />
         <span className="project-type">{type}</span>
-        <Icon className="project-placeholder-icon" strokeWidth={1} aria-hidden="true" />
         <ArrowUpRight className="project-preview-arrow" strokeWidth={1.5} aria-hidden="true" />
-      </div>
+      </a>
 
       <div className="project-card-content">
         <h3>{title}</h3>
@@ -82,8 +124,14 @@ function ProjectCard({
             <span key={tag}>{tag}</span>
           ))}
         </div>
-        <a href="#contact" className="project-link">
-          View Details <ArrowUpRight size={19} strokeWidth={1.5} aria-hidden="true" />
+        <a
+          href={href}
+          target="_blank"
+          rel="noreferrer"
+          className="project-link"
+          aria-label={"Visit " + title + " (opens in a new tab)"}
+        >
+          Visit Live Site <ArrowUpRight size={19} strokeWidth={1.5} aria-hidden="true" />
         </a>
       </div>
     </article>

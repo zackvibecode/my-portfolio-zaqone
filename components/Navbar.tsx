@@ -58,7 +58,7 @@ export function Navbar() {
       <nav className="page-container navigation" aria-label="Main navigation">
         <a href="#home" className="availability-pill" aria-label="ZAQONE — Home"><span />Available for projects</a>
         <ul className="desktop-navigation">
-          <li><a href="#projects">Projects <span>[4]</span></a></li>
+          <li><a href="#projects">Projects <span>[7]</span></a></li>
           <li><a href="#services">Services <span>[6]</span></a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
